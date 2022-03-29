@@ -1,8 +1,6 @@
-import { pool } from '../../config/db';
+import { pool } from "config/db";
 
 export default async function handler(req, res) {
-
-  const [rows] = await pool.query('SELECT NOW()')
-  console.log(rows);
-  res.status(200).json({ name: 'Hello World' });
+  const results = await pool.query("SELECT NOW()");
+  res.status(200).json({ result: results[0]["NOW()"] });
 }

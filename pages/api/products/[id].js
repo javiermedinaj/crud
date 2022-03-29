@@ -14,21 +14,29 @@ export default async function handler(req, res) {
 }
 
 const getProduct = async (req, res) => {
-    const { id } = req.query
+    try {
+        const { id } = req.query
 
-    const [result] = await pool.query('SELECT * FROM product WHERE id = ?', [id])
+        const [result] = await pool.query('SELECT * FROM product WHERE id = ?', [id])
 
-    return res.status(200).json(result[0]);
+        return res.status(200).json(result[0]);
 
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
     //es req query no reqparam
 }
 
 const deleteProduct = async (req, res) => {
-    const { id } = req.query
+    try {
+        const { id } = req.query
 
-    const [result] = await pool.query('DELETE FROM product WHERE id = ?', [id])
+        await pool.query('DELETE FROM product WHERE id = ?', [id])
 
-    return res.status(204).json();
+        return res.status(204).json();
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
 }
 
 const updateProduct = async (req, res) => {
@@ -38,7 +46,7 @@ const updateProduct = async (req, res) => {
 
         return res.status(204).json();
     } catch (error) {
-        console.log(error)
+        re
     }
 
 }
